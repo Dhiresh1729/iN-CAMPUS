@@ -16,6 +16,7 @@ public class SharedPrefManager {
 
     private static final String SHARED_PREF_NAME = "mysharedpref";
     private static final String KEY_LOGS = "";
+    private static final String KEY_ALL_LOGS = "";
 
 
     private SharedPrefManager(Context context) {
@@ -42,11 +43,26 @@ public class SharedPrefManager {
         return true;
     }
 
+//    public boolean allUserLogs(String logs){
+//        SharedPreferences sharedPreferences = ctx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+//        SharedPreferences.Editor editor = sharedPreferences.edit();
+//
+//        editor.putString(KEY_ALL_LOGS, logs);
+//        editor.apply();
+//
+//        return true;
+//    }
+
     public String getKeyLogs(){
         SharedPreferences sharedPreferences = ctx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         System.out.println("SharedPrefManager/DEBUG47/KEY_LOGS: " + KEY_LOGS);
         return sharedPreferences.getString(KEY_LOGS, null);
     }
+
+//    public String getKeyAllLogs(){
+//        SharedPreferences sharedPreferences = ctx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+//        return sharedPreferences.getString(KEY_ALL_LOGS, null);
+//    }
 
 
 

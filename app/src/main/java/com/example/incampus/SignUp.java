@@ -130,7 +130,7 @@ public class SignUp extends AppCompatActivity {
 
                                      if(finalUsername1.equals("Security")){
                                          Toast.makeText(SignUp.this, "Account created!!", Toast.LENGTH_SHORT).show();
-                                         Intent i = new Intent(SignUp.this, SecurityActivity.class);
+                                         Intent i = new Intent(SignUp.this, StudentCard.class);
                                          startActivity(i);
                                          finish();
                                      }

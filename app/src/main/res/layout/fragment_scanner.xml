@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Scanner">
+
+    <!-- TODO: Update blank fragment layout -->
+<!--    <TextView-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:text= "FRAGMENT1"/>-->
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="365dp"
+        android:text="Click on the Scan button to mark exit/entry of a student by scanning QR code"
+        android:textAlignment="center"
+        android:textStyle="bold|italic" />
+
+    <Button
+        android:id="@+id/scanBtn"
+        android:layout_width="105dp"
+        android:layout_height="87dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="146dp"
+        android:layout_marginTop="197dp"
+        android:layout_marginEnd="160dp"
+        android:layout_marginBottom="447dp"
+        android:text="SCAN" />
+
+</RelativeLayout>

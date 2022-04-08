@@ -78,7 +78,17 @@ public class LogsFragment extends Fragment {
             }
         });
 
+        refreshCotent(tableView);
         return rootView;
+    }
+
+    private void refreshCotent(TableView tableView) {
+        getLogs(MainActivity.user_Name);
+        String logs = SharedPrefManager.getInstance(getActivity().getApplicationContext()).getKeyLogs();
+        String[] headers = {"S.no", "Date", "Time", "Exit/Entry"};
+        tableView.setHeaderAdapter(new SimpleTableHeaderAdapter(getActivity().getApplicationContext(), headers));
+        if(!logs.equals(""))
+            tableView.setDataAdapter(new SimpleTableDataAdapter(getActivity().getApplicationContext(), addRow(logs)));
     }
 
     private String[][] addRow(String logs) {
@@ -204,4 +214,6 @@ public class LogsFragment extends Fragment {
 //        System.out.println("user_name: " + MainActivity.user_Name);
 //        getLogs(MainActivity.user_Name);
 //    }
+
+
 }

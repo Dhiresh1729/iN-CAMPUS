@@ -102,7 +102,7 @@ public class LogIn extends AppCompatActivity {
                                         public void onComplete(@NonNull Task<AuthResult> task) {
 
                                             if(finalUsername1.equals("Security")){
-                                                Intent i = new Intent(LogIn.this, SecurityActivity.class);
+                                                Intent i = new Intent(LogIn.this, Security.class);
                                                 startActivity(i);
                                                 finish();
                                             }
@@ -178,7 +178,7 @@ public class LogIn extends AppCompatActivity {
         if(firebaseUser != null){
 
             if(firebaseUser.getEmail().equals("nonuser1729@gmail.com")){
-                Intent i = new Intent(LogIn.this, SecurityActivity.class);
+                Intent i = new Intent(LogIn.this, Security.class);
                 startActivity(i);
                 finish();
             }
