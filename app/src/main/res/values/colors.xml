@@ -10,4 +10,5 @@
     <color name="blue_shade_1">#0e2433</color>
     <color name="blue_shade_2">#1c4966</color>
     <color name="mtrl_textinput_default_box_stroke_colour" tools:overrise="true">#296D98</color>
+    <color name="Header_Colour">#FA2727</color>
 </resources>

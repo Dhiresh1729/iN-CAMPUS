@@ -3,12 +3,15 @@ package com.example.incampus;
 import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.provider.DocumentsContract;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -48,9 +51,10 @@ public class LogsFragment extends Fragment {
         Toast.makeText(getContext(), "Fragment reloaded", Toast.LENGTH_SHORT).show();
 
         thisContext = container.getContext();
-        getLogs(MainActivity.user_Name);
-        System.out.println("DEBUG51/USERNAME: " + MainActivity.user_Name);
-        final String[] logs = {SharedPrefManager.getInstance(thisContext).getKeyLogs()};
+//        getLogs(MainActivity.user_Name);
+//        System.out.println("DEBUG51/USERNAME: " + MainActivity.user_Name);
+//        final String[] logs = {SharedPrefManager.getInstance(thisContext).getKeyLogs()};
+        final String[] logs = {""};
 
         TableView tableView = rootView.findViewById(R.id.userLogs);
         String[] headers = {"S.no", "Date", "Time", "Exit/Entry"};
@@ -62,34 +66,44 @@ public class LogsFragment extends Fragment {
         tableView.setColumnModel(columnPxWidthModel);
 
         tableView.setHeaderAdapter(new SimpleTableHeaderAdapter(getActivity().getApplicationContext(), headers));
+        getLogs(MainActivity.user_Name);
+        System.out.println("DEBUG70");
+        System.out.println("USERNAME: " + MainActivity.user_Name);
+        logs[0] = SharedPrefManager.getInstance(thisContext).getKeyLogs();
+
+
         if(!logs[0].equals(""))
             tableView.setDataAdapter(new SimpleTableDataAdapter(getActivity().getApplicationContext(), addRow(logs[0])));
 
         rootView.findViewById(R.id.refreshBtn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new LogsFragment()).commit();
-//                getLogs(MainActivity.user_Name);
-//                System.out.println("DEBUG70");
-//                System.out.println("USERNAME: " + MainActivity.user_Name);
-//                logs[0] = SharedPrefManager.getInstance(thisContext).getKeyLogs();
-//                if(!logs[0].equals(""))
-//                    tableView.setDataAdapter(new SimpleTableDataAdapter(getActivity().getApplicationContext(), addRow(logs[0])));
+//                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new LogsFragment()).commit();
+                getLogs(MainActivity.user_Name);
+                System.out.println("DEBUG70");
+                System.out.println("USERNAME: " + MainActivity.user_Name);
+                logs[0] = SharedPrefManager.getInstance(thisContext).getKeyLogs();
+                if(!logs[0].equals(""))
+                    tableView.setDataAdapter(new SimpleTableDataAdapter(getActivity().getApplicationContext(), addRow(logs[0])));
             }
         });
 
-        refreshCotent(tableView);
+
+//        refreshCotent(tableView);
         return rootView;
     }
 
-    private void refreshCotent(TableView tableView) {
-        getLogs(MainActivity.user_Name);
-        String logs = SharedPrefManager.getInstance(getActivity().getApplicationContext()).getKeyLogs();
-        String[] headers = {"S.no", "Date", "Time", "Exit/Entry"};
-        tableView.setHeaderAdapter(new SimpleTableHeaderAdapter(getActivity().getApplicationContext(), headers));
-        if(!logs.equals(""))
-            tableView.setDataAdapter(new SimpleTableDataAdapter(getActivity().getApplicationContext(), addRow(logs)));
-    }
+
+
+
+//    private void refreshCotent(TableView tableView) {
+//        getLogs(MainActivity.user_Name);
+//        String logs = SharedPrefManager.getInstance(getActivity().getApplicationContext()).getKeyLogs();
+//        String[] headers = {"S.no", "Date", "Time", "Exit/Entry"};
+//        tableView.setHeaderAdapter(new SimpleTableHeaderAdapter(getActivity().getApplicationContext(), headers));
+//        if(!logs.equals(""))
+//            tableView.setDataAdapter(new SimpleTableDataAdapter(getActivity().getApplicationContext(), addRow(logs)));
+//    }
 
     private String[][] addRow(String logs) {
 
@@ -158,6 +172,7 @@ public class LogsFragment extends Fragment {
                 Request.Method.POST,
                 Constants.URL_SHOWLOGS,
                 new Response.Listener<String>() {
+
                     @Override
                     public void onResponse(String response) {
                         try {

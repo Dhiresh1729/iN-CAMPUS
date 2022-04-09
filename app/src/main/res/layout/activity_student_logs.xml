@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".StudentLogs"
+    android:orientation="vertical"
+    android:background="#FF6C8C">
+
+    <Button
+        android:id="@+id/refreshBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:text="refresh"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+    <de.codecrafters.tableview.TableView
+        android:id="@+id/studentLogs"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:tableView_columnCount="4"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="-209dp"/>
+
+</androidx.appcompat.widget.LinearLayoutCompat>

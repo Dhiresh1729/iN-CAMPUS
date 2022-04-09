@@ -21,6 +21,9 @@
         android:theme="@style/Theme.INCAMPUS"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".StudentLogs"
+            android:exported="false" />
+        <activity
             android:name=".Student"
             android:exported="false"
             android:theme="@style/Theme.INCAMPUS.NoActionBar" />
@@ -35,8 +38,7 @@
 
         <activity
             android:name=".StudentCard"
-            android:exported="false"
-            android:theme="@style/Theme.INCAMPUS.NoActionBar"/>
+            android:exported="false" />
         <activity
             android:name="com.journeyapps.barcodescanner.CaptureActivity"
             android:screenOrientation="portrait"

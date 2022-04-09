@@ -43,6 +43,7 @@ public class StudentCard extends AppCompatActivity {
     public static EditText userName;
     private EditText exitEntry;
     private Button refreshBtn;
+    public  static String [][]result;
 
 
 
@@ -59,17 +60,7 @@ public class StudentCard extends AppCompatActivity {
         scanBtn = findViewById(R.id.scanBtn);
         refreshBtn = findViewById(R.id.refreshBtn);
 
-        getAllLogs();
-        String logs = SharedPrefManager1.getInstance(getApplicationContext()).getKeyAllLogs();
 
-
-        TableView tableView = findViewById(R.id.studentLogs);
-        String[] headers = {"Username ", "Date", "Time", "Exit/Entry"};
-
-        tableView.setHeaderAdapter(new SimpleTableHeaderAdapter(getApplicationContext(), headers));
-
-        if(!logs.equals(""))
-            tableView.setDataAdapter(new SimpleTableDataAdapter(getApplicationContext(), addRow(logs)));
 
         markBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -103,10 +94,11 @@ public class StudentCard extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 getAllLogs();
-                String logs = SharedPrefManager1.getInstance(getApplicationContext()).getKeyAllLogs();
-                if(!logs.equals(""))
-                    tableView.setDataAdapter(new SimpleTableDataAdapter(getApplicationContext(), addRow(logs)));
-
+                String logs = SharedPrefManager.getInstance(getApplicationContext()).getKeyAllLogs();
+                result = addRow(logs);
+                Intent i = new Intent(StudentCard.this, StudentLogs.class);
+                startActivity(i);
+                finish();
             }
         });
 
@@ -114,15 +106,7 @@ public class StudentCard extends AppCompatActivity {
 
     }
 
-    @Override
-    public void onResume(){
-                getAllLogs();
-        String logs = SharedPrefManager1.getInstance(getApplicationContext()).getKeyAllLogs();
-        String[] headers = {"Username ", "Date", "Time", "Exit/Entry"};
-        tableView.setHeaderAdapter(new SimpleTableHeaderAdapter(getApplicationContext(), headers));
-        if(!logs.equals(""))
-            tableView.setDataAdapter(new SimpleTableDataAdapter(getApplicationContext(), addRow(logs)));
-    }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
