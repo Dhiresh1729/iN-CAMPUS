@@ -78,13 +78,13 @@ public class LogsFragment extends Fragment {
         rootView.findViewById(R.id.refreshBtn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new LogsFragment()).commit();
-                getLogs(MainActivity.user_Name);
-                System.out.println("DEBUG70");
-                System.out.println("USERNAME: " + MainActivity.user_Name);
-                logs[0] = SharedPrefManager.getInstance(thisContext).getKeyLogs();
-                if(!logs[0].equals(""))
-                    tableView.setDataAdapter(new SimpleTableDataAdapter(getActivity().getApplicationContext(), addRow(logs[0])));
+                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new LogsFragment()).commit();
+//                getLogs(MainActivity.user_Name);
+//                System.out.println("DEBUG70");
+//                System.out.println("USERNAME: " + MainActivity.user_Name);
+//                logs[0] = SharedPrefManager.getInstance(thisContext).getKeyLogs();
+//                if(!logs[0].equals(""))
+//                    tableView.setDataAdapter(new SimpleTableDataAdapter(getActivity().getApplicationContext(), addRow(logs[0])));
             }
         });
 

@@ -181,7 +181,7 @@ public class StudentCard extends AppCompatActivity {
 
     private String[][] addRow(String logs) {
 
-        System.out.println("DEBUG86/last_char: " + logs.charAt(logs.length() - 1));
+//        System.out.println("DEBUG86/last_char: " + logs.charAt(logs.length() - 1));
 
         StringTokenizer st = new StringTokenizer(logs, "\n");
         ArrayList<String> tempLogs = new ArrayList<String>();
