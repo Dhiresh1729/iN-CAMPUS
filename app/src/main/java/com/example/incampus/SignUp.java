@@ -3,22 +3,33 @@ package com.example.incampus;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.ContentResolver;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.webkit.MimeTypeMap;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnProgressListener;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.util.regex.Pattern;
 
@@ -27,6 +38,8 @@ public class SignUp extends AppCompatActivity {
     private EditText firstName, lastName, userName, emailId, password, confirmPassword;
     private Button signUpBtn;
     private TextView toggleSignUp;
+//    private Uri mImageUri;
+//    private StorageReference mStorageRef;
     private FirebaseAuth mAuth;
     private DatabaseReference reference;
 
@@ -45,6 +58,9 @@ public class SignUp extends AppCompatActivity {
         signUpBtn = findViewById(R.id.btnSignUp);
         mAuth = FirebaseAuth.getInstance();
         reference = FirebaseDatabase.getInstance().getReference();
+//        mStorageRef = FirebaseStorage.getInstance().getReference("uploads");
+//        mImageUri = Uri.parse("android.resource://com.example.incampus/drawable-anydpi/ic_dp.xml");
+
 
         toggleSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -134,6 +150,8 @@ public class SignUp extends AppCompatActivity {
                                          startActivity(i);
                                          finish();
                                      }
+
+//                                     uploadFile(finalUsername);
                                      Toast.makeText(SignUp.this, "Account created!!", Toast.LENGTH_SHORT).show();
                                      Intent i = new Intent(SignUp.this, MainActivity.class);
                                      startActivity(i);
@@ -154,5 +172,41 @@ public class SignUp extends AppCompatActivity {
          }
      });
     }
+
+//    private void uploadFile(String username){
+//        if (mImageUri != null){
+//            StorageReference fileReference = mStorageRef.child(username);
+//            fileReference.putFile(Uri.parse(mImageUri))
+//                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+//                        @Override
+//                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+//                            Toast.makeText(SignUp.this, "Upload Successful", Toast.LENGTH_SHORT).show();
+//
+//                        }
+//                    }).addOnFailureListener(new OnFailureListener() {
+//                @Override
+//                public void onFailure(@NonNull Exception e) {
+//                    Toast.makeText(SignUp.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+//
+//                }
+//            }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+//                @Override
+//                public void onProgress(@NonNull UploadTask.TaskSnapshot snapshot) {
+//                    double progress = (100.0 * snapshot.getBytesTransferred() / snapshot.getTotalByteCount());
+//
+//                }
+//            });
+//        }
+//
+//        else{
+//            Toast.makeText(this, "No file selected", Toast.LENGTH_SHORT).show();
+//        }
+//    }
+//
+//    private String getFileExtension(Uri uri){
+//        ContentResolver cR = getContentResolver();
+//        MimeTypeMap mime = MimeTypeMap.getSingleton();
+//        return mime.getExtensionFromMimeType(cR.getType(uri));
+//    }
 }
 

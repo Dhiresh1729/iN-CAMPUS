@@ -8,10 +8,14 @@
     android:theme="@style/ThemeOverlay.AppCompat.Dark"
     android:orientation="vertical">
 
+
+
     <ImageView
         android:layout_width="87dp"
         android:layout_height="114dp"
-        android:src="@drawable/ic_dp" />
+        android:src="@drawable/ic_dp"
+        android:id="@+id/studentProfilePic"/>
+
 
     <TextView
         android:id="@+id/txtUserName"

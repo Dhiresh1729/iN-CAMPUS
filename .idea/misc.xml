@@ -3,6 +3,9 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/dell/iNCAMPUS - Copy/app/src/main/res/drawable/ic_account_box.xml" value="0.1111111111111111" />
+        <entry key="..\:/Users/dell/iNCAMPUS - Copy/app/src/main/res/drawable/ic_calendar.xml" value="0.1111111111111111" />
+        <entry key="..\:/Users/dell/iNCAMPUS - Copy/app/src/main/res/drawable/ic_check.xml" value="0.1111111111111111" />
         <entry key="..\:/Users/dell/iNCAMPUS - Copy/app/src/main/res/layout/activity_admin.xml" value="0.1" />
         <entry key="..\:/Users/dell/iNCAMPUS - Copy/app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="..\:/Users/dell/iNCAMPUS - Copy/app/src/main/res/layout/activity_security.xml" value="0.16" />
@@ -11,6 +14,7 @@
         <entry key="..\:/Users/dell/iNCAMPUS - Copy/app/src/main/res/layout/activity_student2.xml" value="0.1" />
         <entry key="..\:/Users/dell/iNCAMPUS - Copy/app/src/main/res/layout/activity_student_card.xml" value="0.27350427350427353" />
         <entry key="..\:/Users/dell/iNCAMPUS - Copy/app/src/main/res/layout/activity_student_logs.xml" value="0.25" />
+        <entry key="..\:/Users/dell/iNCAMPUS - Copy/app/src/main/res/layout/alerl_layout.xml" value="0.33" />
         <entry key="..\:/Users/dell/iNCAMPUS - Copy/app/src/main/res/layout/fragment_home.xml" value="0.1" />
         <entry key="..\:/Users/dell/iNCAMPUS - Copy/app/src/main/res/layout/fragment_home_security.xml" value="0.17012448132780084" />
         <entry key="..\:/Users/dell/iNCAMPUS - Copy/app/src/main/res/layout/fragment_logs.xml" value="0.43910614525139663" />
@@ -20,7 +24,7 @@
         <entry key="..\:/Users/dell/iNCAMPUS - Copy/app/src/main/res/layout/fragment_scanner.xml" value="0.22" />
         <entry key="..\:/Users/dell/iNCAMPUS - Copy/app/src/main/res/layout/fragment_student.xml" value="0.1" />
         <entry key="..\:/Users/dell/iNCAMPUS - Copy/app/src/main/res/layout/fragment_text_marking.xml" value="0.1" />
-        <entry key="..\:/Users/dell/iNCAMPUS - Copy/app/src/main/res/layout/nav_header.xml" value="0.1287037037037037" />
+        <entry key="..\:/Users/dell/iNCAMPUS - Copy/app/src/main/res/layout/nav_header.xml" value="0.25" />
         <entry key="..\:/Users/dell/iNCAMPUS - Copy/app/src/main/res/layout/nav_header_1.xml" value="0.5" />
         <entry key="..\:/Users/dell/iNCAMPUS - Copy/app/src/main/res/menu/drawer_menu.xml" value="0.33" />
         <entry key="..\:/Users/dell/iNCAMPUS - Copy/app/src/main/res/menu/drawer_menu_1.xml" value="0.22" />

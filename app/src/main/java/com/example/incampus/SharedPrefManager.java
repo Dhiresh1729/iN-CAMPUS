@@ -59,12 +59,12 @@ public class SharedPrefManager {
     public String getKeyLogs(){
         SharedPreferences sharedPreferences = ctx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         System.out.println("SharedPrefManager/DEBUG47/KEY_LOGS: " + KEY_LOGS);
-        return sharedPreferences.getString(KEY_LOGS, null);
+        return sharedPreferences.getString(KEY_LOGS, "");
     }
 
     public String getKeyAllLogs(){
         SharedPreferences sharedPreferences = ctx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
-        return sharedPreferences.getString(KEY_ALL_LOGS, null);
+        return sharedPreferences.getString(KEY_ALL_LOGS, "");
     }
 
 

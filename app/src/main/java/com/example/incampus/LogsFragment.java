@@ -71,6 +71,8 @@ public class LogsFragment extends Fragment {
         System.out.println("USERNAME: " + MainActivity.user_Name);
         logs[0] = SharedPrefManager.getInstance(thisContext).getKeyLogs();
 
+        if(logs[0].isEmpty())
+            logs[0] = "";
 
         if(!logs[0].equals(""))
             tableView.setDataAdapter(new SimpleTableDataAdapter(getActivity().getApplicationContext(), addRow(logs[0])));

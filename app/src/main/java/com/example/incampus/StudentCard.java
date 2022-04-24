@@ -1,15 +1,22 @@
 package com.example.incampus;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -17,7 +24,13 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-import com.google.firebase.auth.FirebaseAuth;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FileDownloadTask;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
@@ -25,6 +38,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -32,19 +47,15 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.StringTokenizer;
 
-import de.codecrafters.tableview.TableView;
-import de.codecrafters.tableview.model.TableColumnPxWidthModel;
-import de.codecrafters.tableview.toolkit.SimpleTableDataAdapter;
-import de.codecrafters.tableview.toolkit.SimpleTableHeaderAdapter;
-
 public class StudentCard extends AppCompatActivity {
 
     private Button logoutBtn, markBtn, scanBtn;
     public static EditText userName;
-    private EditText exitEntry;
     private Button refreshBtn;
+    private RadioGroup radioGroup;
+    private RadioButton radioButton;
     public  static String [][]result;
-
+    private StorageReference storageReference;
 
 
     @Override
@@ -55,19 +66,37 @@ public class StudentCard extends AppCompatActivity {
         Toast.makeText(StudentCard.this, "Toamst", Toast.LENGTH_SHORT).show();
 
         userName = findViewById(R.id.userNameEdtTxt);
-        exitEntry = findViewById(R.id.exitEntryEdtTxt);
         markBtn = findViewById(R.id.markBtn);
         scanBtn = findViewById(R.id.scanBtn);
         refreshBtn = findViewById(R.id.refreshBtn);
-
-
+        radioGroup = findViewById(R.id.radioGroup);
 
         markBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String username = userName.getText().toString();
-                String exitentry = exitEntry.getText().toString();
-               insert_log(username, exitentry);
+                int radioId = radioGroup.getCheckedRadioButtonId();
+                radioButton = findViewById(radioId);
+                String exitentry = radioButton.getText().toString();
+
+                new AlertDialog.Builder(StudentCard.this)
+                        .setTitle("ALERT!")
+                        .setMessage("Are you sure, you want to insert an " + exitentry  + " log, for " + username + "?")
+                        .setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                insert_log(username, exitentry);
+                                dialogInterface.dismiss();
+                            }
+                        }).setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                    }
+                }).create().show();
+
+
+
         }});
 
 
@@ -116,22 +145,93 @@ public class StudentCard extends AppCompatActivity {
             String username = result.getContents();
             username = username.replace("http://", "");
             String finalUsername = username;
-            new AlertDialog.Builder(StudentCard.this)
-                    .setTitle("USERNAME SCANNED")
-                    .setMessage(username)
-                    .setPositiveButton("Entry", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            insert_log(finalUsername, "Entry");
-                            dialogInterface.dismiss();
-                        }
-                    }).setNegativeButton("Exit", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    insert_log(finalUsername, "Exit");
-                    dialogInterface.dismiss();
-                }
-            }).create().show();
+            final Bitmap[] bitmap = new Bitmap[1];
+
+            storageReference = FirebaseStorage.getInstance().getReference("uploads/" + username);
+            try {
+                File localFile = File.createTempFile("tempfile", "jpeg");
+                String finalUsername1 = username;
+                storageReference.getFile(localFile)
+                        .addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+                            @Override
+                            public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+
+                                bitmap[0] = BitmapFactory.decodeFile(localFile.getAbsolutePath());
+                                LayoutInflater layoutInflater = LayoutInflater.from(getApplicationContext());
+                                final  View view = layoutInflater.inflate(R.layout.alerl_layout,null);
+                                ImageView imageView = view.findViewById(R.id.studentProfilePic);
+                                imageView.setImageBitmap(bitmap[0]);
+                                new AlertDialog.Builder(StudentCard.this)
+                                        .setView(view)
+                                        .setTitle("USERNAME SCANNED")
+                                        .setMessage(finalUsername1)
+                                        .setPositiveButton("Entry", new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialogInterface, int i) {
+                                                insert_log(finalUsername, "Entry");
+                                                dialogInterface.dismiss();
+                                            }
+                                        }).setNegativeButton("Exit", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        insert_log(finalUsername, "Exit");
+                                        dialogInterface.dismiss();
+                                    }
+                                }).create().show();
+//                                tempImage.setImageBitmap(bitmap);
+
+
+
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                LayoutInflater layoutInflater = LayoutInflater.from(getApplicationContext());
+                                final  View view = layoutInflater.inflate(R.layout.alerl_layout,null);
+                                new AlertDialog.Builder(StudentCard.this)
+                                        .setView(view)
+                                        .setTitle("USERNAME SCANNED")
+                                        .setMessage(finalUsername1)
+                                        .setPositiveButton("Entry", new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialogInterface, int i) {
+                                                insert_log(finalUsername, "Entry");
+                                                dialogInterface.dismiss();
+                                            }
+                                        }).setNegativeButton("Exit", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        insert_log(finalUsername, "Exit");
+                                        dialogInterface.dismiss();
+                                    }
+                                }).create().show();
+                            }
+                        });
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+
+//            LayoutInflater layoutInflater = LayoutInflater.from(this);
+//            final  View view = layoutInflater.inflate(R.layout.alerl_layout,null);
+//            new AlertDialog.Builder(StudentCard.this)
+//                    .setView(view)
+//                    .setTitle("USERNAME SCANNED")
+//                    .setMessage(username)
+//                    .setPositiveButton("Entry", new DialogInterface.OnClickListener() {
+//                        @Override
+//                        public void onClick(DialogInterface dialogInterface, int i) {
+//                            insert_log(finalUsername, "Entry");
+//                            dialogInterface.dismiss();
+//                        }
+//                    }).setNegativeButton("Exit", new DialogInterface.OnClickListener() {
+//                @Override
+//                public void onClick(DialogInterface dialogInterface, int i) {
+//                    insert_log(finalUsername, "Exit");
+//                    dialogInterface.dismiss();
+//                }
+//            }).create().show();
 
         }
         super.onActivityResult(requestCode, resultCode, data);
@@ -297,5 +397,13 @@ public class StudentCard extends AppCompatActivity {
         startActivity(i);
         finish();
     }
+
+    public void onRadioButtonClicked(View view){
+        int radioId = radioGroup.getCheckedRadioButtonId();
+
+        radioButton = findViewById(radioId);
+    }
+
+
 
 }
