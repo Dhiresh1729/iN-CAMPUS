@@ -1,6 +1,7 @@
 package com.example.incampus;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -38,8 +39,10 @@ import java.util.StringTokenizer;
 import de.codecrafters.tableview.TableView;
 import de.codecrafters.tableview.model.TableColumnDpWidthModel;
 import de.codecrafters.tableview.model.TableColumnPxWidthModel;
+import de.codecrafters.tableview.providers.TableDataRowBackgroundProvider;
 import de.codecrafters.tableview.toolkit.SimpleTableDataAdapter;
 import de.codecrafters.tableview.toolkit.SimpleTableHeaderAdapter;
+import de.codecrafters.tableview.toolkit.TableDataRowBackgroundProviders;
 
 public class LogsFragment extends Fragment {
 
@@ -74,8 +77,12 @@ public class LogsFragment extends Fragment {
         if(logs[0].isEmpty())
             logs[0] = "";
 
-        if(!logs[0].equals(""))
+        if(!logs[0].equals("")){
+
+
             tableView.setDataAdapter(new SimpleTableDataAdapter(getActivity().getApplicationContext(), addRow(logs[0])));
+        }
+
 
         rootView.findViewById(R.id.refreshBtn).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,9 +101,6 @@ public class LogsFragment extends Fragment {
 //        refreshCotent(tableView);
         return rootView;
     }
-
-
-
 
 //    private void refreshCotent(TableView tableView) {
 //        getLogs(MainActivity.user_Name);
